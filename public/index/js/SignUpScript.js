@@ -1,4 +1,18 @@
-let emailFlag = 0;
+function signUpResultMessage(msg, isError = true, show = true){
+  document.getElementById("SignUpResultMessage").innerText = msg;
+  if (show){
+    document.getElementById("SignUpResultMessage").style.display = "block";
+  }
+  else{
+    document.getElementById("SignUpResultMessage").style.display = "none";
+  }
+  if (isError){
+    document.getElementById("SignUpResultMessage").style.backgroundColor = "darksalmon"; 
+  }
+  else{
+    document.getElementById("SignUpResultMessage").style.backgroundColor = "green"; 
+  }
+}
 
 window.onload = function() {
   var signup = function() {
@@ -7,93 +21,90 @@ window.onload = function() {
     const reenterPassword = document.getElementById("reenterPassword").value;
     const username = document.getElementById("username").value;
     if (email.length < 4 || username.length == 0 || pass != reenterPassword) {
-      alert(
-        "Account not created: Please ensure that all inputs are correctly filled and that passwords match, and then try again."
-      );
+      signUpResultMessage("Account not created: Please ensure that all inputs are correctly filled and that passwords match. Then, try again.");
       return false;
     }
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, pass)
+      .createUserWithEmailAndPassword(email, pass).then(userCredential => {
+            // User created successfully, return user object
+            userCredential.user.sendEmailVerification()
+            .then(()=> {
+            
+              signUpResultMessage("Account Created: To login, verify your email via the sign-up link sent to your inbox.", false);
+                userCredential.user.updateProfile({
+                  displayName: username, 
+                })
+              .then(function() {
+                console.log("Successfully sendEmailVerification()");
+                setCookie("newEmailAccount", email, 7);
+              })
+              .catch(function(error) {
+                console.log("Error: " + error.message);
+              });
+            })
+            .catch(function(error) {
+              console.log("Error: " + error.message);
+            });
+
+      })
       .catch(function(error) {
         console.log(error.message);
         if (error.message == "The email address is badly formatted.") {
-          alert("The email address is badly formatted.");
+          signUpResultMessage("Account Not Created: The email address is badly formatted.");
         }
         if (error.message == "Password should be at least 6 characters") {
-          alert("Password should be at least 6 characters.");
+          signUpResultMessage("Account Not Created: Password should be at least 6 characters.");
         }
-        if (
-          error.message ==
-          "The email address is already in use by another account."
-        ) {
-          alert("The email address is already in use by another account");
+        if (error.message == "The email address is already in use by another account.") {
+          
+          if (getCookie("newEmailAccount") == email){
+            signUpResultMessage("Account Already Created: Please verify your account and return to the home page to log in.");
+          }
+          else{
+            signUpResultMessage("Account Not Created: The email address is already in use by another account.");
+          }
         }
-        return false;
       });
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        //User is signed in.
-        var user = firebase.auth().currentUser;
-        console.log("user is " + firebase.auth().currentUser);
-        if (user != null) {
-          user
-            .sendEmailVerification()
-            .then(function() {
-              // Email sent.
-              if (emailFlag == 0) {
-                window.alert(
-                  "To login, verify your email via the sign-up sent to your inbox before proceeding."
-                );
-                emailFlag = 1;
-              }
+  
+    };
 
-              //window.location.href = "../index.html";
-            })
-            .catch(function(error) {
-              // An error happened.
-              console.log("Error happened: " + error.message);
-            });
-          var email_id = user.email;
-          var email_verified = user.emailVerified;
-          console.log("Email Verified: " + email_verified);
-          // insert username as well
-          user
-            .updateProfile({
-              displayName: username
-            })
-            .then(function() {
-              // Update successful.
-              console.log("Successfully added username");
-              //var user = firebase.auth().currentUser;
-            })
-            .catch(function(error) {
-              // An error happened.
-              window.alert("Error adding username");
-            });
-
-          return false;
-        }
-      } else {
-        // No user is signed in.
-        //  alert("Account not created. Please try again.");
-      }
-    });
-  };
   document.getElementById("signup").addEventListener("click", e => {
+    event.preventDefault();
+    signUpResultMessage("", isError = false, show = false) // Clear message from previous click
     signup();
   });
 
-  document
-    .getElementById("reenterPassword")
-    .addEventListener("keypress", function(event) {
-      if (event.keyCode === 13) {
-        //13 is enter
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
         event.preventDefault();
         document.getElementById("signup").click();
-      }
-    });
+    }
+  });
+
   document.getElementById("goHome").addEventListener("click", function(event) {
     window.location.href = "../index.html";
   });
+
+  function setCookie(name, value, daysToExpire) {
+    const date = new Date();
+    date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+
+  function getCookie(name) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+    for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i];
+        while (cookie.charAt(0) === ' ') {
+            cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) === 0) {
+            return cookie.substring(name.length + 1, cookie.length);
+        }
+    }
+    return null;
+  }
 };
