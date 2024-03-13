@@ -1,6 +1,5 @@
-# Project: University Textbook Marketplace and Study Forum
+# University Textbook Marketplace and Study Forum
 
-### Description
 Host a website via Firebase where users post for-sale listings of 
 textbooks and ask other users questions about class material.
 
