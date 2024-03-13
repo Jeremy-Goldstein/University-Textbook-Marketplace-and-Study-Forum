@@ -6,7 +6,7 @@ $(document).ready(function() {
   console.log("Setting up GUI");
 
   firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
+    if (user && user.emailVerified) {
       console.log("user is " + firebase.auth().currentUser);
       var user = firebase.auth().currentUser;
       showUserAvatar();
