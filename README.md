@@ -1,4 +1,9 @@
-# Project: Textbook Marketplace and Open Study Website
+# Project: University Textbook Marketplace and Study Forum
+
+### Description
+Host a website via Firebase where users post for-sale listings of 
+textbooks and ask other users questions about class material.
+
 ### Live Website: https://washu-books.firebaseapp.com
 
 ### Installation
