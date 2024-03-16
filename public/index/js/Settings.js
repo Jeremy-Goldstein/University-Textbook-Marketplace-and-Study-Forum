@@ -1,71 +1,38 @@
-$(window).load(function() {
+var user = firebase.auth().currentUser;
+
+$(document).ready(function() {
+
   loadCurrentUserInfo();
 
-  $("#updateBtn").click(update);
-  $("#updatePassBtn").click(updatePass);
+  $("#updateUsernameEmailBtn").click(function(event){
+    event.preventDefault();
+    updateUsernameEmail()
+  });
+  $("#updatePassBtn").click(function(event){
+    event.preventDefault();
+    updatePassword(event);
+  });
+
   //  $("#moderateBtn").click(sendEmail);
   $("#moderateBtn").click(moderatorForm);
 
   //document.getElementById("moderateBtn").addEventListener("click",moderatorForm);
-  document.getElementById("my-file").onchange = function(e) {
-    //Get File
-    var file = e.target.files[0];
-
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        //Create a Storage Ref
-        var storageRef = firebase
-          .storage()
-          .ref(user + "/profilePictures/" + file.name);
-        //Upload file
-        var task = storageRef.put(file).then(function(snapshot) {
-          console.log("Successly inserted image");
-          snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            console.log("File available at", downloadURL);
-            // update user
-            var user = firebase.auth().currentUser;
-            user
-              .updateProfile({
-                photoURL: downloadURL
-              })
-              .then(function() {
-                // Update successful.
-                alert("Successfully updated user profile image.");
-              })
-              .catch(function(error) {
-                // An error happened.
-                //alert("Error encountered updating user profile image.");
-              });
-            var user = firebase.auth().currentUser;
-
-            if (user != null && downloadURL != null) {
-              downloadURL = user.photoURL;
-              document.getElementById("profile-pic").src = downloadURL;
-              location.reload();
-            } else {
-              alert("Error uploading profile image.");
-            }
-            showUserAvatar();
-          });
-        });
-      } else {
-        // No user is signed in.
-      }
-    });
-  };
+  document.getElementById("uploadedFile").addEventListener("change", function(event) {
+    updateProfilePicture(event)
+  });
+   
 });
 
 function showUserAvatar() {
-  var user = firebase.auth().currentUser;
+  
 
   if (user != null) {
     if (user.photoURL == null) {
       document.getElementById("profileImg").src = "../images/placeholder.png";
-      document.getElementById("profile-pic").src = "../images/placeholder.png";
+      document.getElementById("profilePicture").src = "../images/placeholder.png";
     } else {
       document.getElementById("profileImg").src = user.photoURL;
-      document.getElementById("profile-pic").src = user.photoURL;
+      document.getElementById("profilePicture").src = user.photoURL;
     }
   }
 }
@@ -73,7 +40,7 @@ function showUserAvatar() {
 function loadCurrentUserInfo() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      var user = firebase.auth().currentUser;
+      
       // User is signed in.
       let email = user.email;
       let username = user.displayName;
@@ -85,80 +52,43 @@ function loadCurrentUserInfo() {
   });
 }
 
-let update = () => {
-  console.log("user settings update button clicked");
-  var user = firebase.auth().currentUser;
-  let newName = document.getElementById("username").value;
+function updateUsernameEmail() {
+  
+  let newUsername = document.getElementById("username").value;
   let newEmail = document.getElementById("email").value;
 
-  if (newName != "" && newEmail != "") {
-    user
-      .updateProfile({
-        displayName: newName
-      })
-      .then(function() {
-        // Update successful.
-        if (validateEmail(newEmail)) {
-          user
-            .updateEmail(newEmail)
-            .then(() => {
-              clearAlert();
-              $("#alert").append(`<div class="alert alert-success" role="alert">
-  Succesfully updated user information. Reload the page to see the changes made.
-</div>`);
-              //location.reload();
-            })
-            .catch(function(error) {
-              clearAlert();
-              $("#alert").append(`<div class="alert alert-danger" role="alert">
-    Error updating user information. Error message: ${error.message}
-    </div>`);
-            });
-        } else {
-          alert("Please enter a valid email address.");
-        }
-      })
-      .catch(function(error) {
-        // An error happened.
-        clearAlert();
-        $("#alert").append(`<div class="alert alert-danger" role="alert">
-Error updating user information. Error message: ${error.message}
-</div>`);
-      });
-  } else if (newName != "") {
-    user
-      .updateProfile({
-        displayName: newName
-      })
-      .then(function() {
-        // Update successful.
-        clearAlert();
-        $("#alert").append(`<div class="alert alert-success" role="alert">
-Succesfully updated user information. Reload the page to see the changes made.
-</div>`);
-        // location.reload();
-      })
-      .catch(function(error) {
-        // An error happened.
-        clearAlert();
-        $("#alert").append(`<div class="alert alert-danger" role="alert">
-Error updating user information. Error message: ${error.message}
-</div>`);
-      });
-  } else if (newEmail != "") {
-    if (validateEmail(newEmail)) {
-      user.updateEmail(newEmail).then(() => {
-        clearAlert();
-        $("#alert").append(`<div class="alert alert-success" role="alert">
-Succesfully updated user information. Reload the page to see the changes made.
-</div>`);
-        // location.reload();
-      });
-    } else {
-      alert("Please enter a valid email address.");
-    }
+  // Update username 
+  if (isValidUsername(newUsername)){
+    user.updateProfile({
+      displayName: newUsername
+    })
+    .catch(function(error) {
+      signUpResultMessage(error.message, isError=true, show=true, id="usernameEmailChangeResult");
+      return
+    });  
   }
-};
+  else{
+    signUpResultMessage("Please ensure your username is valid and then try again", isError=true, show=true, id="usernameEmailChangeResult");
+    return
+  }
+
+  // Update email 
+  if(isValidEmail(newEmail)){
+    user.updateEmail(newEmail)
+    .then(() => {
+        signUpResultMessage("Username and email updated.", isError=false, show=true, id="usernameEmailChangeResult");
+      })
+    .catch(function(error){
+      signUpResultMessage(error.message, isError=true, show=true, id="usernameEmailChangeResult");
+    });
+  }
+  else{
+    signUpResultMessage("Please ensure your email is valid and then try again", isError=true, show=true, id="usernameEmailChangeResult");
+    return
+  }
+
+  
+}
 
 function moderatorForm() {
   console.log("moderator form");
@@ -212,36 +142,68 @@ function moderatorForm() {
   $("#contactBtn").click(sendEmail);
 }
 
-function updatePass() {
-  var user = firebase.auth().currentUser;
-  let newPass = document.getElementById("newpass").value;
-  let newPassC = document.getElementById("confirm_newpass").value;
+function updatePassword() {
+  
+  let newPassword = document.getElementById("newPassword").value;
+  let newPasswordConfirm = document.getElementById("newPasswordConfirm").value;
 
-  // TODO: Check if old password is correct (for security)
-  if (newPass != newPassC || newPass == "" || newPassC == "") {
-    alert("Passwords don't match!");
-  } else {
-    user.updatePassword(newPass).then(
+  if (newPassword != newPasswordConfirm){
+    signUpResultMessage("Error: Password do not match.", isError=true, show=true, id="passwordResetResult");
+  }
+  else if (newPassword.length < 6 || newPasswordConfirm < 6) {
+    signUpResultMessage("Error: Password must be at least 6 characters.", isError=true, show=true, id="passwordResetResult");
+  } 
+  else {
+    user.updatePassword(newPassword).then(
       () => {
-        console.log("Updating password successful");
-        alert("Successfully updated password!");
+        signUpResultMessage("Successfully updated password!", isError=false, show=true, id="passwordResetResult");
       },
       error => {
-        // An error happened.
-        alert("Updating password failed. Please try signing in again.");
+        signUpResultMessage(error) ;
       }
     );
   }
 }
 
-function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
+function updateProfilePicture(event){
 
-function clearAlert() {
-  var myNode = document.getElementById("alert");
-  while (myNode.firstChild) {
-    myNode.removeChild(myNode.firstChild);
-  }
+  //Get File
+  var file = event.target.files[0];
+
+  //Create a Storage Ref
+  var storageRef = firebase
+    .storage()
+    .ref(user + "/profilePictures/" + file.name);
+
+  //Upload file
+  var uploadTask = storageRef.put(file)
+  
+  // Listen for state changes, errors, and completion of the upload
+  uploadTask.on('state_changed', 
+    function(error) {
+      // Handle unsuccessful uploads
+      console.error('Upload failed:', error);
+    },
+    function() {
+      console.log("Successly uploaded image");
+
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        console.log("File available at", downloadURL);
+        
+        // Update user
+        user
+          .updateProfile({
+            photoURL: downloadURL
+          })
+          .then(function() {
+            console.log("Successfully updated user profile image.");
+            showUserAvatar();
+          })
+          .catch(function(error) {
+            console.log(error)
+          });
+        
+      });
+  });
+
 }

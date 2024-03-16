@@ -3,12 +3,14 @@
 Host a website via Firebase where users post for-sale listings of 
 textbooks and ask other users questions about class material.
 
-### Live Website: https://washu-books.firebaseapp.com
+### Live Website: https://universitystudyhall.firebaseapp.com
 
 ### Installation
 1. Install Node and NPM: https://nodejs.org/en/download/
 2. Clone this repository
-4. Install needed packages: `npm install`
+3. Install the Firebase CLI: `npm install -g firebase-tools`
+4. Install packages: `npm install`
+5. Initialize Firebase in the project: `firebase init`
 
 ### To Deploy to the Firebase Server
  1. Open the ./public directory: `cd public`
@@ -20,7 +22,6 @@ textbooks and ask other users questions about class material.
 
 ### Solution Stack
 - Node.js
-- Express.js
 - Firebase
 - Javascript/HTML/CSS
 

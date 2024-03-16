@@ -6,7 +6,7 @@
   <!-- Firebase App is always required and must be first -->
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
 
-  <!--Autentication-->
+  <!--Authentication-->
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
 
   <!--Database-->
@@ -44,76 +44,68 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
 
-<body>
-  <!-- TOP NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#TODO">
-      <img src="/images/whiteLogo.png" width="300" height="45" class="d-inline-block align-top" alt="">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <body>
+    <!-- TOP NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="navbar-nav ml-auto">
-        <!-- Right align -->
-        <button type="button" class="btn btn-light" id="logoutBtn">
-          <i class="fas fa-sign-out-alt"></i> Log Out</button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav ml-auto">
+          <!-- Right align -->
+          <button type="button" class="btn btn-light" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> Log Out</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <!-- MAIN CONTENT -->
-  <div class="row">
-    <div class="col-sm-2">
-      <br>
-      <br>
-      <!-- PROFILE INFO -->
-      <h5 class="center">
-        Welcome Back,
+    </nav>
+    <!-- Main Content -->
+    <div class="row">
+      <div class="col-sm-2">
         <br>
-        <div id="userName">User<div>
-      </h5>
-      <br>
-      <!-- Profile image -->
-      <img id="profileImg" src="https://d2x5ku95bkycr3.cloudfront.net/App_Themes/Common/images/profile/0_200.png" class="center" alt="placeholder avatar" height="70" width="70">
-      <!-- Text input-->
-      <div class="center">
         <br>
+        <!-- PROFILE INFO -->
+        <h5 class="center">
+          Welcome Back,
+          <br>
+          <div id="userName">User<div>
+        </h5>
+        <br>
+        <!-- Profile image -->
+        <img id="profileImg" src="https://d2x5ku95bkycr3.cloudfront.net/App_Themes/Common/images/profile/0_200.png" class="center" alt="placeholder avatar" height="70" width="70">
         <!-- Text input-->
-        <div class="form-group">
-          <div class="col-md-6" id="userEmail">fillerEmail@gmail.com</div>
+        <div class="center">
+          <br>
+          <!-- Text input-->
+          <div class="form-group">
+            <div class="col-md-6" id="userEmail">fillerEmail@gmail.com</div>
+          </div>
+        </div>
+        <!-- CATEGORIES -->
+        <div class="nav flex-column">
+          <a class="nav-link" href="../html/homepage.html">Home</a>
+          <a class="nav-link" href="../html/Textbooks.html">Textbooks</a>
+          <a class="nav-link" href="../html/classes.html">Classes</a>
+          <a class="nav-link" href="../html/userSettings.html">Settings</a>
+          <a class="nav-link active" href="../html/forum.html">Forum</a>
         </div>
       </div>
-      <!-- CATEGORIES -->
-      <div class="nav flex-column">
-        <a class="nav-link" href="../html/homepage.html">Home</a>
-        <a class="nav-link" href="../html/Textbooks.html">Textbooks</a>
-        <a class="nav-link" href="../html/classes.html">Classes</a>
-        <a class="nav-link" href="../html/userSettings.html">Settings</a>
-        <a class="nav-link active" href="../html/forum.html">Forum</a>
-      </div>
-    </div>
-    <div class="col-sm-10">
-      <!-- Header image -->
-      <div class="container">
-        <img src="/images/holmes.jpg" style='width:100%;' alt="Holmes Lounge" />
-        <div class="centered">
-          <h1>Welcome to WashU
-            <br>Free and For Sale!</h1>
-          <h4>By college students, for college students</h4>
+      <div class="col-sm-10">
+        <!-- Header image -->
+        <div class="container">
+          <img src="/images/holmes.jpg" style='width:100%;' alt="Holmes Lounge" />
+          <div class="centered">
+            <h1>Q&A Forum</h1>
+            <h4>By college students, <br> for college students</h4>
+          </div>
         </div>
-      </div>
-      <br>
-      <br>
-      <!-- FORUM -->
-      <a id="nabblelink" href="http://washu-for-you.89390.n8.nabble.com/">WashU For You</a>
-      <script src="http://washu-for-you.89390.n8.nabble.com/embed/f1"></script>
-      <!-- FOOTER -->
-      <footer class="footer">
-        <div style="text-align: center; font-size:10pt;">
-          &copy; Copyright 2018 Washington University in St.Louis
-        </div>
+        <br>
+        <br>
+        <!-- FORUM -->
+        <a id="nabblelink" href="http://washu-for-you.89390.n8.nabble.com/">WashU For You</a>
+        <script src="http://washu-for-you.89390.n8.nabble.com/embed/f1"></script>
+    
 
-      </footer>
-
-</body </html>
+  </body>
+</html>

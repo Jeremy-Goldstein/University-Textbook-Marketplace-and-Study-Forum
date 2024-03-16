@@ -1,54 +1,43 @@
-body{
-  background-image: url("../images/img1.jpg"),url("../images/witewall_3.png");
-  background-repeat: no-repeat,repeat;
+.background-radial-gradient {
+  background-color: hsl(218, 41%, 15%);
+  background-image: radial-gradient(650px circle at 0% 0%,
+      hsl(218, 41%, 35%) 15%,
+      hsl(218, 41%, 30%) 35%,
+      hsl(218, 41%, 20%) 75%,
+      hsl(218, 41%, 19%) 80%,
+      transparent 100%),
+    radial-gradient(1250px circle at 100% 100%,
+      hsl(218, 41%, 45%) 15%,
+      hsl(218, 41%, 30%) 35%,
+      hsl(218, 41%, 20%) 75%,
+      hsl(218, 41%, 19%) 80%,
+      transparent 100%);
 }
-#loginForm{
-  position: absolute;
-  left: 813px;
-  top: 104px;
-  width: 300px;
-  height: 322px;
-  padding-left: 50px;
-  padding-top: 48px;
-}
-#loginLabel{
-  font-weight: bold;
-  font-family: 'Source Serif Pro', serif;
-  position: relative;
-  font-size: 32px;
-  bottom: 15px;
-  left: 25px;
-  color: #990000;
-}
-#email{
-  position: relative;
-  width: 250px;
-  height: 37px;
-}
-#password{
-  position: relative;
-  top: 26px;
-  width: 250px;
-  height: 37px;
-}
-#login{
-  position: relative;
-  font-family: 'Source Serif Pro', serif;
-  left: 63px;
-  top: 56px;
-  width: 110px;
-  height: 29px;
-}
-#createAccount{
-  position: absolute;
-  left: 1075px;
-  top: 26px;
-  font-family: 'Source Serif Pro', serif;
-  height: 29px;
-}
-#forgotPassword{
-  position: relative;
-  left: 904px;
-  top: 399px;
 
+#radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  left: -130px;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
+}
+
+#radius-shape-2 {
+  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+  bottom: -60px;
+  right: -110px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
+}
+
+.bg-glass {
+  background-color: hsla(0, 0%, 100%, 0.9) !important;
+  backdrop-filter: saturate(200%) blur(25px);
+}
+
+.form-outline .form-control:focus ~ .form-label, .form-outline .form-control.active ~ .form-label {
+  transform: translateY(-1.5rem) translateY(0.1rem) scale(0.8);
 }
