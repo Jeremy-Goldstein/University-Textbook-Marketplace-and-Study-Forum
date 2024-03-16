@@ -1,18 +1,3 @@
-function signUpResultMessage(msg, isError = true, show = true){
-  document.getElementById("SignUpResultMessage").innerText = msg;
-  if (show){
-    document.getElementById("SignUpResultMessage").style.display = "block";
-  }
-  else{
-    document.getElementById("SignUpResultMessage").style.display = "none";
-  }
-  if (isError){
-    document.getElementById("SignUpResultMessage").style.backgroundColor = "darksalmon"; 
-  }
-  else{
-    document.getElementById("SignUpResultMessage").style.backgroundColor = "green"; 
-  }
-}
 
 window.onload = function() {
   var signup = function() {
@@ -20,9 +5,17 @@ window.onload = function() {
     const pass = document.getElementById("password").value;
     const reenterPassword = document.getElementById("reenterPassword").value;
     const username = document.getElementById("username").value;
-    if (email.length < 4 || username.length == 0 || pass != reenterPassword) {
-      signUpResultMessage("Account not created: Please ensure that all inputs are correctly filled and that passwords match. Then, try again.");
-      return false;
+    if (! isValidEmail(email)){
+      signUpResultMessage("Account not created: Please ensure that the email is valid. Then, try again.");
+      return;
+    } 
+    if(! isValidUsername(username)){
+      signUpResultMessage("Account not created: Please ensure that the username is valid. Then, try again.");
+      return;
+    }
+    if (pass != reenterPassword) {
+      signUpResultMessage("Account not created: Please ensure passwords match. Then, try again.");
+      return;
     }
     firebase
       .auth()
@@ -50,12 +43,6 @@ window.onload = function() {
       })
       .catch(function(error) {
         console.log(error.message);
-        if (error.message == "The email address is badly formatted.") {
-          signUpResultMessage("Account Not Created: The email address is badly formatted.");
-        }
-        if (error.message == "Password should be at least 6 characters") {
-          signUpResultMessage("Account Not Created: Password should be at least 6 characters.");
-        }
         if (error.message == "The email address is already in use by another account.") {
           
           if (getCookie("newEmailAccount") == email){
@@ -65,11 +52,14 @@ window.onload = function() {
             signUpResultMessage("Account Not Created: The email address is already in use by another account.");
           }
         }
+        else{
+          signUpResultMessage("Account Not Created: " + error.message);
+        }
       });
   
     };
 
-  document.getElementById("signup").addEventListener("click", e => {
+  document.getElementById("createAccount").addEventListener("click", event => {
     event.preventDefault();
     signUpResultMessage("", isError = false, show = false) // Clear message from previous click
     signup();
@@ -78,12 +68,13 @@ window.onload = function() {
   document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
-        document.getElementById("signup").click();
+        document.getElementById("createAccount").click();
     }
   });
 
   document.getElementById("goHome").addEventListener("click", function(event) {
-    window.location.href = "../index.html";
+    event.preventDefault();
+    window.location.href = '../index.html';
   });
 
   function setCookie(name, value, daysToExpire) {

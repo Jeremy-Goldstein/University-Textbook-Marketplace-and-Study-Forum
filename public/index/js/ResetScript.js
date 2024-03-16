@@ -1,22 +1,29 @@
 window.onload = function () {
 
-  var reset = function () {
+  var resetPassword = function () {
     var emailAddress = document.getElementById("email").value;
 
     firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
-      // Email sent.
-      //  window.alert("Email sent");
+      signUpResultMessage("Password Reset: Please check your email.", false);
     }).catch(function (error) {
-
-      //  window.alert("Error: "+error.message);
-      // An error happened.
+      signUpResultMessage(error, false);
     });
 
   }
-  document.getElementById("resetPassword").addEventListener('click', e => {
-
-    reset();
-    window.location.href = "../index.html";
-    return false;
+  document.getElementById("resetPassword").addEventListener('click', function(event) {
+    event.preventDefault();
+    resetPassword();
   });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        document.getElementById("resetPassword").click();
+    }
+  });
+
+  document.getElementById("goHome").addEventListener("click", function(event) {
+    event.preventDefault();
+    window.location.href = '../index.html';
+  });
+
 }

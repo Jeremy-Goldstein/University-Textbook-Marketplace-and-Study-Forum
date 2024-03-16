@@ -1,63 +1,136 @@
 <html>
   <head>
-    <!-- Firebase App is always required and must be first -->
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
 
-    <!-- Autentication -->
+    <!--Authentication-->
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
-
-    <!-- Database -->
+  
+    <!--Database-->
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
-
+  
     <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+
     <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyBm6NA9yafW64dWpG0nwHpzwA73lTi_EHc",
-        authDomain: "washu-books.firebaseapp.com",
-        databaseURL: "https://washu-books.firebaseio.com",
-        projectId: "washu-books",
-        storageBucket: "washu-books.appspot.com",
-        messagingSenderId: "94731731491"
-      };
-      firebase.initializeApp(config);
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-c6ek6-s_F17oT7MqSrHFLV0pKx6GgVs",
+      authDomain: "universitystudyhall.firebaseapp.com",
+      projectId: "universitystudyhall",
+      storageBucket: "universitystudyhall.appspot.com",
+      messagingSenderId: "994046093519",
+      appId: "1:994046093519:web:61ddee7ee39cbcec492fba",
+      measurementId: "G-67S8VGW8RC"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="../js/LoginScript.js"></script>
+    <!-- Font Awesome -->
     <link
-      href="https://fonts.googleapis.com/css?family=Exo+2|Indie+Flower|Josefin+Sans|Lobster|Roboto+Mono|Shadows+Into+Light|Source+Serif+Pro|Ubuntu"
-      rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
     />
-    <link rel="stylesheet" type="text/css" href="../css/LoginStyle.css" />
-    <title>Login Page</title>
+    <!-- Google Fonts -->
+    <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
+    rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/LoginStyle.css" />
+    
+    <title>Home Page</title>
   </head>
 
   <body>
-    <div id="loginForm">
-      <label id="loginLabel">
-        Sign in to <br />
-        WashU for U! </label
-      ><br />
-      <input
-        type="text"
-        id="email"
-        name="email"
-        placeholder="Email Address"
-      /><br />
-      <input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Password"
-      /><br />
-      <input type="submit" id="login" name="login" value="Log In" />
-      <label> </label>
-    </div>
-    <button id="createAccount">Create an account</button>
+    <!-- MDB -->
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
+    ></script>
+    <!-- Section: Design Block -->
+    <section class="background-radial-gradient overflow-hidden">
 
-    <a id="forgotPassword" href="/html/PasswordReset.html">
-      Forgot your password?
-    </a>
+      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+        <div class="row gx-lg-5 align-items-center mb-5">
+          <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+              University Textbook Marketplace <br />
+              <span style="color: hsl(218, 81%, 75%)">and Study Forum</span>
+            </h1>
+            <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+              Buy, sell, and exchange class information hassle-free. 
+              Whether you're searching for required course materials or looking to offload last semester's books, our platform connects you with fellow students seamlessly. 
+              Dive into our vibrant study forum to collaborate, share resources, and conquer academic challenges together. 
+            </p>
+          </div>
+
+          <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+            <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+            <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+            <div class="card bg-glass">
+              <div style="padding: unset;" class="card-body px-4 pt-5 px-md-5">
+                <h4 class="mb-2  text-center">Sign in</h4>
+                <form>
+
+
+                  <!-- Email input -->
+                  <div class="form-outline mb-4">
+                    <input type="email" id="email" class="form-control border border-secondary border-solid border-1" />
+                    <label class="form-label label-float">Email address</label>
+                  </div>
+
+                  <!-- Password input -->
+                  <div class="form-outline mb-4">
+                    <input type="password" id="password" class="form-control border border-secondary border-solid border-1" />
+                    <label class="label-float form-label">Password</label>
+                  </div>
+
+                  <div class="d-flex justify-content-center mb-2">
+                    <p class="text-muted small text-center" id="loginResult">
+                      
+                    </p>
+                  </div>
+                  
+                  <div class="d-flex justify-content-center mb-4">
+                    <label class="text-muted" id="forgotPassword">
+                      Forgot Password?
+                    </label>
+                  </div>
+                  
+
+                  <button type="submit" id="login" class="btn btn-primary btn-block mb-4">
+                    Log In
+                  </button>
+
+                  <button type="submit" id="createAccount" class="btn btn-secondary btn-block mb-5">
+                    Create Account
+                  </button> 
+                  
+                  <div class="d-flex justify-content-center" >
+                    <p class="m-0 small text-center">  <a href="https://github.com/Selamawit1/CSE437S_Final_Project" > Code</a> on GitHub  </p>
+                    <i style="margin-left: 2px;" class=" fab fa-github"></i>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: Design Block -->  
+
+
+  <!-- Custom Javascript -->
+  <script src="./js/CommonFunctions.js"></script>
+  <script src="./js/LoginScript.js"></script>    
+
   </body>
 </html>

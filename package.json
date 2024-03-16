@@ -20,6 +20,10 @@
   "dependencies": {
     "express": "^4.16.3",
     "firebase-tools": "^6.1.1",
+    "mdb-ui-kit": "^7.2.0",
     "node": "^10.10.0"
+  },
+  "devDependencies": {
+    "husky": "^9.0.11"
   }
 }
