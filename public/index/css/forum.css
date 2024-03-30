@@ -1,0 +1,32 @@
+/*
+    CSS Stylesheet
+    Description: Styles for the forum page.
+*/
+
+#postDetails {
+	overflow: auto;
+}
+
+#postListings {
+	overflow: auto;
+}
+
+.top-left {
+	align-self: flex-start;
+	/* Aligns the item at the top within the flex container */
+	justify-self: flex-start;
+	/* Aligns the item at the left within the flex container */
+}
+
+/* Style the active state of the button */
+.downvote.active,
+.upvote.active {
+	background-color: #c3cfdd;
+	border-color: #5f6974;
+	color: #1c1c1c;
+}
+
+.downvote.active i,
+.upvote.active i {
+	color: #1c1c1c;
+}
