@@ -1,9 +1,20 @@
 <!DOCTYPE html>
+
+<!--
+    HTML Document
+    Description: Landing navigation page for class forums.
+    - List all classses
+    - Search classes
+    - Create a new class
+    - Edit a class
+-->
+
 <html lang='en'>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Homepage</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
   <!-- Firebase App is always required and must be first -->
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
 
@@ -15,315 +26,405 @@
 
   <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
   <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyBm6NA9yafW64dWpG0nwHpzwA73lTi_EHc",
-      authDomain: "washu-books.firebaseapp.com",
-      databaseURL: "https://washu-books.firebaseio.com",
-      projectId: "washu-books",
-      storageBucket: "washu-books.appspot.com",
-      messagingSenderId: "94731731491"
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-c6ek6-s_F17oT7MqSrHFLV0pKx6GgVs",
+      authDomain: "universitystudyhall.firebaseapp.com",
+      projectId: "universitystudyhall",
+      databaseURL: "https://universitystudyhall-default-rtdb.firebaseio.com",
+      storageBucket: "universitystudyhall.appspot.com",
+      messagingSenderId: "994046093519",
+      appId: "1:994046093519:web:61ddee7ee39cbcec492fba",
+      measurementId: "G-67S8VGW8RC"
     };
-    firebase.initializeApp(config);
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
   </script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="../js/Setup.js"></script>
-  <script src="../js/classes.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/HomeStyle.css">
-  <link rel="stylesheet" type="text/css" href="/css/ClassesStyle.css">
-  <!-- Use Bootstrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-  <!-- FontAwesome Glyphicons -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="../js/Setup.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
+
+  <!-- Scrollbar Custom CSS -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="../css/authenticated.css">
+  <link rel="stylesheet" href="../css/unauthenticated.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+
+  <title>Homepage</title>
 
 </head>
 
 <body>
-  <!-- TOP NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <!-- Side Navbar -->
+  <nav class="background-radial-gradient" id="sidebar">
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="navbar-nav ml-auto">
-        <!-- Right align -->
-        <button type="button" class="btn btn-light" id="logoutBtn">
-          <i class="fas fa-sign-out-alt"></i> Log Out</button>
+    <!-- Header Side Navbar -->
+    <div id="dismiss">
+      <i class="fas fa-arrow-left"></i>
+    </div>
+    <div class="sidebar-header p-4">
+      <img id="profileImg" class="justify-content-center w-50 h-50 "
+        src="https://d2x5ku95bkycr3.cloudfront.net/App_Themes/Common/images/profile/0_200.png">
+      <div class="justify-content-center">
+        <h5 class="m-0" id="userName">
+          User
+        </h5>
+        <div class="form-group">
+          <div class="" id="userEmail">userEmail</div>
+        </div>
       </div>
     </div>
+    <!-- End Header Side Navbar -->
+
+    <ul class="list-unstyled components">
+      <li>
+        <a href="../html/home.html">Home </a>
+      </li>
+      <li>
+        <a href="../html/textbooks.html">
+          Textbooks
+        </a>
+      </li>
+      <li class="active list-unstyled" data-toggle="collapse" aria-expanded="true">
+        <a href="../html/classes.html">
+          Classes
+        </a>
+      </li>
+      <li>
+        <a href="../html/settings.html">Settings </a>
+      </li>
+    </ul>
   </nav>
+  <!-- End Side Navbar -->
   <div id="content">
+    <!-- Header Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-a background-radial-gradient-5 vh-10 ">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button data-mdb-collapse-init class="navbar-toggler d-flex align-items-left" type="button"
+          data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation" id="sidebarCollapse">
+          <i class="fas fa-bars"></i>
+        </button>
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+          <a class="link-secondary me-3" id="logoutBtn" style="cursor: pointer;">
+            <i class="fas fa-sign-out-alt"></i> <span class="text-dark"> Log Out</span>
+          </a>
+        </div>
+        <!-- Right elements -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- End Header Top Navbar -->
     <!-- Main Content -->
-    <div class="row">
-      <div class="col-sm-2">
-        <br>
-        <br>
-        <!-- PROFILE INFO -->
-        <h5 class="center">
-          Welcome Back,
-          <br>
-          <div id="userName">User<div>
-        </h5>
-        <br>
-        <!-- Profile image -->
-        <img id="profileImg" src="https://d2x5ku95bkycr3.cloudfront.net/App_Themes/Common/images/profile/0_200.png" class="center"
-          alt="placeholder avatar" height="70" width="70">
-        <!-- Text input-->
-        <div class="center">
-          <br>
-          <!-- Text input-->
-          <div class="form-group">
-            <div class="col-md-6" id="userEmail">fillerEmail@gmail.com</div>
+    <section class=" d-flex flex-column background-radial-gradient-5 overflow-auto vh-100 ">
+
+      <!-- Title -->
+      <h2 class="text-center mb-2  outlined-text  fw-bold ">
+        Classes
+      </h2>
+      <!-- End Title -->
+
+      <!-- Your Classes Subscribed  -->
+      <div class="container justify-content-center bg-glass rounded col-md-10 col-12 mb-2">
+        <h2 class="text-center">Your Classes</h2>
+
+        <div class=" justify-content-center row " id="yourSubscriptionClasses">
+          <div class="clickable card justify-content-center col-8 col-md-3 py-1 mx-2 my-2 d-none"
+            id="classSubscribed-0">
+            <div class="card-body text-center">
+              <h5 class="card-title">Subscribe to a Class Below!</h5>
+            </div>
+          </div>
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
           </div>
         </div>
-        <!-- CATEGORIES -->
-        <div class="nav flex-column">
-          <a class="nav-link" href="../html/homepage.html">Home</a>
-          <a class="nav-link" href="../html/Textbooks.html">Textbooks</a>
-          <a class="nav-link active" href="../html/classes.html">Classes</a>
-          <a class="nav-link" href="../html/userSettings.html">Settings</a>
+
+      </div>
+      <hr>
+
+      <!-- End Your Classes Subscribed  -->
+      <div class="container justify-content-center bg-glass rounded col-md-10 col-12 my-2 pb-2">
+        <h2 class=" container text-center my-2">Classes You Added</h2>
+        <div class=" justify-content-center row " id="userClassListings">
+          <div class="card clickable  col-8 col-md-3 py-1 mx-2 my-2 d-none" id="classModerate-0">
+            <div class="card-body text-center">
+              <h5 class="card-title">Card title</h5>
+            </div>
+          </div>
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
+        <!-- Add Class -->
+        <div class="justify-content-center d-flex " id="addBtn">
+          <div class="  col-md-6 col-12 btn bg-light">
+            <span>
+              Add
+              Class
+              <i class="fas fa-plus-square"></i>
+            </span>
+          </div>
         </div>
-        <div class="col-sm-10">
-          <!-- Header image -->
-          <div class="container">
-            <img src="../images/holmes.jpg" style='width:100%;' alt="Holmes Lounge" />
-            <div class="centered">
-              <h1>Class Listings</h1>
-              <h4>By college students, <br> for college students</h4>
-            </div>
+      </div>
+
+      <hr>
+      <div class="container justify-content-center bg-glass rounded col-md-10 col-12 my-2">
+        <!-- Search Content -->
+        <h2 class="my-2 text-center ">All Class Pages</h2>
+        <div class="mt-2 input-group">
+          <div class="form-outline" data-mdb-input-init>
+            <input placeholder="Search" type="search" oninput="searchClass()" id="searchClassQuery"
+              class="form-control bg-light" />
+            <label class="form-label" for="form1">Search by class title, deparment, instructor, and more</label>
           </div>
-          <br>
-          <br>
+          <button id="searchClassBtn" type="button" class="btn btn-outline-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <!-- End Search Content -->
 
-          <!-- YOUR CLASSES (ENROLLED/SUBSCRIBED) -->
-          <div>
-            <h1>Your Classes</h1>
+        <div class="table-responsive rounded">
+          <table id="myTable" class="table table-hover">
+            <thead>
+              <tr>
+                <th class="clickable" onclick="sortTable(0)" scope="col">Class Title
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th class="clickable" onclick="sortTable(1)" scope="col">Department
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th class="clickable" onclick="sortTable(2)" scope="col">Instructor
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th class="clickable" onclick="sortTable(3)" scope="col">School
+                  <i class="fa fa-sort"></i>
+                </th>
 
-            <div class="card-deck" id="your-subscription-classes">
-              <div class="card your_class" id="your_class_1">
-                <!-- <img class="card-img-top" src="../images/class_backgrounds/psychology.jpg" alt="Card image"> -->
-                <div class="card-img-overlay">
-                  <div class="card-body text-center">
-                    <h4 class="card-title">Class</h4>
-                    <p class="card-text">Class Description.</p>
+              </tr>
+            </thead>
+            <tbody id="classTableBody">
+              <tr>
+                <td>Class Title</td>
+                <td>Department</td>
+                <td>Instructor</td>
+                <td>School</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
                   </div>
-                </div>
-              </div>
-              <div class="card your_class" id="your_class_2">
-                <!-- <img class="card-img-top" src="../images/class_backgrounds/biology.jpg" alt="Card image"> -->
-                <div class="card-img-overlay">
-                  <div class="card-body text-center">
-                    <h4 class="card-title">Class</h4>
-                    <p class="card-text">Class Description.</p>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
                   </div>
-                </div>
-              </div>
-              <div class="card your_class" id="your_class_3">
-                <!-- <img class="card-img-top" src="../images/class_backgrounds/chemistry.jpg" alt="Card image"> -->
-                <div class="card-img-overlay">
-                  <div class="card-body text-center">
-                    <h4 class="card-title">Class</h4>
-                    <p class="card-text">Class Description.</p>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
                   </div>
-                </div>
-              </div>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- End Table  -->
+      </div>
+
+    </section>
+    <!-- End Main Content -->
+
+    <!-- Subscription Modal -->
+    <div class="modal fade" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModal"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title w-100 " id="subscriptionModalTitle">Class Subscriptions</h5>
+            <button id="closeSubscriptionModalBtn" type="button" class="btn-close" data-mdb-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body justify-content-center">
+
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="unsubscribeButton" autocomplete="off"> Unsubscribe
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="subscribeButton" autocomplete="off"> Subscribe
+              </label>
             </div>
 
-
-            <!-- NEW CLASS MODAL -->
-            <br>
-            <hr>
-            <h1>Classes You Added</h1>
-
-            <div class="modal fade" id="addClassModal" tabindex="-1" role="dialog" aria-labelledby="addClass" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">New Class</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body text-center">
-                    <p>Add a new class page!</p>
-                    <form>
-                      <br>
-                      <input type="text" placeholder="Title" value="" id="title">
-                      <br>
-                      <br>
-                      <input placeholder="Department" type="text" value="" id="department">
-                      <br>
-                      <br>
-                      <input placeholder="Email of instructor" type="text" value="" id="email">
-                      <br>
-                      <br>
-                      <input placeholder="Instructor" type="text" value="" id="instructor">
-                      <br>
-                      <br>
-                      <input placeholder="School" type="text" value="" id="school">
-                      <br>
-                      <br>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="newClassBtn">Add</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- PROTOTYPE LISTING, WILL BE REMOVED -->
-            <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
-              <div id="userClassListings" class="list-group">
-
-              </div>
-              <!-- ADD CLASS -->
-              <div class="row">
-                <div class="col">
-                  <button type="button" class="col-lg btn btn-light" id="addBtn" data-toggle="modal" data-target="#addClassModal">Add Class
-                    <i class="fas fa-plus-square"></i>
-                  </button>
-                </div>
-              </div>
-              <br>
-              <br>
-              <hr>
-              <!-- SEARCH BAR -->
-              <div id="custom-search-input">
-                <div class="form-group">
-                  <h1>Search for Classes</h1>
-                </div>
-                <div class="input-group">
-                  <input oninput="searchClass()" id="searchClassQuery" type="text" class="form-control input-lg" placeholder="Search" /> &nbsp; &nbsp;
-                  <div class="input-group-btn">
-                    <button id='searchClassBtn' type="button" class="btn btn-outline-primary">Search</button>
-                  </div>
-                </div>
-              </div>
-              <br>
-              <!-- /SEARCH BAR -->
-              <div>
-                <table id="myTable" class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th onclick="sortTable(0)" scope="col">Class Title
-                        <i class="fa fa-sort"></i>
-                      </th>
-                      <th onclick="sortTable(1)" scope="col">Department
-                        <i class="fa fa-sort"></i>
-                      </th>
-                      <th onclick="sortTable(2)" scope="col">Instructor
-                        <i class="fa fa-sort"></i>
-                      </th>
-                      <th onclick="sortTable(3)" scope="col">School
-                        <i class="fa fa-sort"></i>
-                      </th>
-                      <th onclick="sortTable(4)" scope="col">Rating
-                        <i class="fa fa-sort"></i>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody id="classTableBody">
-                    <tr>
-                      <td>Class Title</td>
-                      <td>Department</td>
-                      <td>Instructor</td>
-                      <td>School</td>
-                      <td>Rating</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
           </div>
 
+        </div>
+      </div>
+    </div>
+    <!-- End Subscription Modal -->
 
-          <!-- SUBSCIPTION MODAL -->
-          <div class="modal fade" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modal-title-subscription">Subscribe Class</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active" onclick="subscribeClass(false)">
-                      <input type="radio" name="options" id="unsubscribeButton" autocomplete="off" > Unsubscribe
-                    </label>
-                    <label class="btn btn-secondary" onclick="subscribeClass(true)">
-                      <input type="radio" name="options" id="subscribeButton" autocomplete="off" checked> Subscribe
-                    </label>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
+    <!-- Add Class Modal -->
+    <div class="modal fade" id="addClassModal" tabindex="-1" role="dialog" aria-labelledby="addClassModal"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title w-100">New Class</h5>
+            <button id="closeAddClassModalBtn" type="button" class="btn-close" data-mdb-dismiss="modal"
+              aria-label="Close">
+            </button>
           </div>
+          <div class="modal-body text-center">
+            <h6>Add a new class page!</h6>
 
-          <!-- USER CLASS EDITING MODAL -->
-          <div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="uclassitle">Class title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body text-center">
-                  <!-- MODAL CONTENT -->
-                  <h2>Edit Listing</h2>
-                  <form>
 
-                    <br>
-                    <input type="text" placeholder="Title" value="" id="utitle">
-                    <br>
-                    <br>
-                    <input placeholder="Department" type="text" value="" id="udepartment">
-                    <br>
-                    <br>
-                    <input placeholder="Email of instructor" type="text" value="" id="uemail">
-                    <br>
-                    <br>
-                    <input placeholder="Instructor" type="text" value="" id="uinstructor">
-                    <br>
-                    <br>
-                    <input placeholder="School" type="text" value="" id="uschool">
-                    <br>
-                    <br>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
-                </div>
-              </div>
+            <div class="form-outline mt-2 mb-4" data-mdb-input-init>
+              <input type="text" id="title" name="addClassTitle"
+                class="form-control border border-secondary border-solid border-1" />
+              <label for="addClassTitle" class="label-float form-label">Title</label>
             </div>
-          </div>
-          <br>
-      
 
-          </footer>
+            <div class="form-outline mb-4" data-mdb-input-init>
+              <input type="text" id="email" name="addClassEmail"
+                class="form-control border border-secondary border-solid border-1" />
+              <label for="addClassEmail" class="label-float form-label">Email of Instructor</label>
+            </div>
+            <div class="form-outline mb-4" data-mdb-input-init>
+              <input type="text" id="instructor" name="addClassInstructor"
+                class="form-control border border-secondary border-solid border-1" />
+              <label for="addClassInstructor" class="label-float form-label">Instructor</label>
+            </div>
+
+            <div class="form-group mb-4">
+              <form>
+                <select class="form-control" id="school" autocomplete="off" onchange="populateDepartments()">
+                  <option selected disabled> Select a School</option>
+                  <option>Engineering</option>
+                  <option>Business </option>
+                  <option>Arts and Sciences </option>
+                  <option>Arts and Architecture </option>
+                </select>
+              </form>
+            </div>
+
+            <div class="form-group">
+              <select class="form-control" id="department" autocomplete="off">
+                <option selected disabled> Select a School First</option>
+
+                <!-- Departments will be populated dynamically based on the selected school -->
+              </select>
+            </div>
+
+            <!-- Show result for above requests here -->
+            <div class="d-flex justify-content-center mb-2">
+              <p class="small text-center" id="addClassResult">
+                &nbsp;
+              </p>
+            </div>
+
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-primary w-50" id="newClassBtn">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Add Class Modal -->
+
+    <!-- Class Editing Modal -->
+    <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModal"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="uclasstitle">Edit Class</h5>
+            <button id="closeEditClassModalBtn" type="button" class="btn-close" data-mdb-dismiss="modal"
+              aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body text-center">
+            <h6>Edit Listing</h6>
+
+
+            <div class="form-outline mt-2 mb-4" data-mdb-input-init>
+              <input type="text" id="utitle" name="editClassTitle"
+                class="form-control border border-secondary border-solid border-1" />
+              <label for="editClassTitle" class="label-float form-label">Title</label>
+            </div>
+
+
+            <div class="form-outline mb-2" data-mdb-input-init>
+              <input type="text" id="uinstructor" name="editClassInstructor"
+                class="form-control border border-secondary border-solid border-1" />
+              <label for="editClassInstructor" class="label-float form-label">Instructor</label>
+            </div>
+
+            <!-- Show result for above requests here -->
+            <div class="d-flex justify-content-center mb-2">
+              <p class="small text-center" id="editClassResult">
+                &nbsp;
+              </p>
+            </div>
+
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-primary w-50" id="editClassConfirmBtn">Update Class</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Class Editing Modal -->
+  </div>
+  <!-- Dark Overlay element -->
+  <div class="overlay"></div>
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
+  <!-- jQuery Custom Scroller CDN -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom Javascript -->
+  <script src="../js/common.js"></script>
+  <script src="../js/common-authorized.js"></script>
+
+  <script src="../js/classes.js"></script>
+
 </body>
 
 </html>
