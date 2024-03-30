@@ -1,0 +1,224 @@
+/*
+    CSS Stylesheet
+    Description: Style for pages where the user is logged in.
+*/
+
+#profilePicture {
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-right: 20px;
+}
+
+.outlined-text {
+    font-size: 400%;
+    color: white;
+    /* White text */
+    -webkit-text-stroke-width: 0.01em;
+    /* Width of the black outline */
+    -webkit-text-stroke-color: black;
+    /* Color of the black outline */
+}
+
+.background-radial-gradient-2 {
+    background-color: hsl(220, 11%, 63%);
+    background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(220, 11%, 35%) 15%,
+            hsl(220, 11%, 30%) 35%,
+            hsl(220, 11%, 20%) 75%,
+            hsl(220, 11%, 19%) 80%,
+            transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+            hsl(220, 11%, 45%) 15%,
+            hsl(220, 11%, 30%) 35%,
+            hsl(220, 11%, 20%) 75%,
+            hsl(220, 11%, 19%) 80%,
+            transparent 100%);
+}
+
+.background-radial-gradient-3 {
+    background-color: hsl(228, 41%, 15%);
+    background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(228, 41%, 35%) 15%,
+            hsl(228, 41%, 30%) 35%,
+            hsl(228, 41%, 20%) 75%,
+            hsl(228, 41%, 19%) 80%,
+            transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+            hsl(228, 41%, 45%) 15%,
+            hsl(228, 41%, 30%) 35%,
+            hsl(228, 41%, 20%) 75%,
+            hsl(228, 41%, 19%) 80%,
+            transparent 100%);
+}
+
+.background-radial-gradient-4 {
+    background-color: hsl(0, 9%, 93%);
+    background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(0, 0%, 98%) 15%,
+            hsl(0, 0%, 97%) 35%,
+            hsl(0, 0%, 96%) 75%,
+            hsl(0, 0%, 95%) 80%,
+            transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+            hsl(0, 0%, 98%) 15%,
+            hsl(0, 0%, 95%) 35%,
+            hsl(0, 0%, 92%) 75%,
+            hsl(0, 0%, 89%) 80%,
+            transparent 100%);
+}
+
+.background-radial-gradient-5 {
+    background-color: hsl(263, 40%, 15%);
+    background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(263, 41%, 35%) 15%,
+            hsl(263, 41%, 30%) 35%,
+            hsl(263, 41%, 20%) 75%,
+            hsl(263, 41%, 19%) 80%,
+            transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+            hsl(263, 41%, 45%) 15%,
+            hsl(263, 41%, 30%) 35%,
+            hsl(263, 41%, 20%) 75%,
+            hsl(263, 41%, 19%) 80%,
+            transparent 100%);
+}
+
+.blue-gradient {
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+    background-image: linear-gradient(40deg, rgb(69, 202, 252), rgb(48, 63, 159));
+}
+
+.blue-gradient:hover {
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+    background-image: linear-gradient(40deg, rgb(75, 173, 208), rgb(37, 49, 129));
+}
+
+.purple-gradient {
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+    background-image: linear-gradient(40deg, rgb(191, 19, 185), rgb(11, 24, 109));
+
+}
+
+.purple-gradient:hover {
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+    background-image: linear-gradient(40deg, rgb(162, 30, 158), rgb(8, 15, 63));
+}
+
+tbody tr,
+.clickable {
+    cursor: pointer;
+}
+
+/* 
+    Sidebar Styles
+    Adapted from: bootstrapious.com/p/bootstrap-sidebar
+*/
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 999;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+#dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #17181e;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#dismiss:hover {
+    background: #fff;
+    color: #17181e;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.sidebar-header {
+    background: #0d1225;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #17181e;
+    background: #fff;
+    opacity: .5;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    background: #fff;
+    opacity: .5;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #0d1225;
+}
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
