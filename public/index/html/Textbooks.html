@@ -1,9 +1,22 @@
 <!DOCTYPE html>
+
+<!--
+    HTML Document
+    Description: Marketplace for textbooks sales.
+    - List all textbooks
+    - Search textbooks
+    - Create a new listing
+    - Edit a listing
+    - Delete a listing
+    - Contact seller
+-->
+
 <html lang='en'>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Textbook Market</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
   <!-- Firebase App is always required and must be first -->
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
 
@@ -13,266 +26,397 @@
   <!--Database-->
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
 
+  <!--Storage -->
+  <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-storage.js"></script>
+
   <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
   <script>
-    // Initialize Firebase
-    var config = {
-    apiKey: "AIzaSyBm6NA9yafW64dWpG0nwHpzwA73lTi_EHc",
-    authDomain: "washu-books.firebaseapp.com",
-    databaseURL: "https://washu-books.firebaseio.com",
-    projectId: "washu-books",
-    storageBucket: "washu-books.appspot.com",
-    messagingSenderId: "94731731491"
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-c6ek6-s_F17oT7MqSrHFLV0pKx6GgVs",
+      authDomain: "universitystudyhall.firebaseapp.com",
+      projectId: "universitystudyhall",
+      databaseURL: "https://universitystudyhall-default-rtdb.firebaseio.com",
+      storageBucket: "universitystudyhall.appspot.com",
+      messagingSenderId: "994046093519",
+      appId: "1:994046093519:web:61ddee7ee39cbcec492fba",
+      measurementId: "G-67S8VGW8RC"
     };
-    firebase.initializeApp(config);
-    </script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="../js/Setup.js"></script>
-  <script src="../js/textbookScript.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
-  <link rel="stylesheet" type="text/css" href="../css/HomeStyle.css">
-  <!-- Use Bootstrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <!-- FontAwesome Glyphicons -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
+
+  <!-- Scrollbar Custom CSS -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="../css/authenticated.css">
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+  <title>Textbook Marketplace</title>
 
 </head>
 
 <body>
-  <!-- TOP NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <!-- Side Navbar -->
+  <nav class="background-radial-gradient" id="sidebar">
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <span class="navbar-nav ml-auto">
-        <!-- Right align -->
-        <button type="button" class="btn btn-light" id="logoutBtn">
-          <i class="fas fa-sign-out-alt"></i> Log Out</button>
-      </span>
+    <!-- Header Side Navbar -->
+    <div id="dismiss">
+      <i class="fas fa-arrow-left"></i>
     </div>
-  </nav>
-  <div id="content">
-    <div class="row">
-      <!-- SIDEBAR -->
-      <div class="col-sm-2">
-        <br>
-        <br>
-        <!-- PROFILE INFO -->
-        <h5 class="center">
-          Welcome Back,
-          <br>
-          <div id="userName">User<div>
+    <div class="sidebar-header p-4">
+      <img id="profileImg" class="center w-50 h-50 "
+        src="https://d2x5ku95bkycr3.cloudfront.net/App_Themes/Common/images/profile/0_200.png">
+      <div class="center">
+        <h5 class=" center m-0" id="userName">
+          User
         </h5>
-        <br>
-        <!-- Profile image -->
-        <img id="profileImg" src="https://d2x5ku95bkycr3.cloudfront.net/App_Themes/Common/images/profile/0_200.png" class="center" alt="placeholder avatar" height="70" width="70">
-        <!-- Text input-->
-        <div class="center">
-          <br>
-          <!-- Text input-->
-          <div class="form-group">
-            <div class="col-md-6" id="userEmail">fillerEmail@wustl.edu
+        <div class="form-group">
+          <div class="" id="userEmail">userEmail</div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- End Header Side Navbar -->
+
+    <ul class="list-unstyled components">
+      <li>
+        <a href="../html/home.html">Home </a>
+      </li>
+      <li class=" active">
+        <a href="../html/textbooks.html">
+          Textbooks
+        </a>
+      </li>
+      <li class=" list-unstyled" data-toggle="collapse" aria-expanded="true">
+        <a href="../html/classes.html">
+          Classes
+        </a>
+
+
+      </li>
+      <li>
+        <a href="../html/settings.html">Settings </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- End Side Navbar -->
+
+
+  <div id="content">
+    <!-- Header Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-a  background-radial-gradient-3">
+      <!-- Container wrapper -->
+      <div class="container-fluid  ">
+        <!-- Toggle button -->
+        <button data-mdb-collapse-init class="navbar-toggler d-flex align-items-left" type="button"
+          data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation" id="sidebarCollapse">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center ">
+
+        </div>
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+
+          <a class="link-secondary me-3" id="logoutBtn" style="cursor: pointer;">
+            <i class="fas fa-sign-out-alt text-dark"></i> <span class="text-dark"> Log Out</span>
+          </a>
+
+        </div>
+        <!-- Right elements -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- End Header Top Navbar -->
+
+    <!-- Main Content -->
+    <section class="d-flex flex-column background-radial-gradient-3 overflow-auto vh-100">
+
+
+      <h2 class="text-center mb-2  outlined-text  fw-bold ">
+        Textbooks
+      </h2>
+
+
+
+
+      <!-- User Owned Textbook -->
+
+      <div class="container justify-content-center bg-glass rounded col-md-10 col-12 pb-2 mb-2">
+        <h3 class="text-center ">My Listings</h3>
+
+
+        <div class=" justify-content-center row " id="userTextbookListings"
+          class="rounded justify-content-center container w-50 bg-light justify-content-center text-center list-group">
+          <div class="card clickable col-8 col-md-3 py-1 mx-2 my-2 d-none" id="userTextbook-0">
+            <div class="card-body text-center">
+              <h5 class="card-title">Card title</h5>
             </div>
           </div>
-        </div>
-        <!-- CATEGORIES -->
-        <div class="nav flex-column">
-          <a class="nav-link active" href="../html/homepage.html">Home</a>
-          <a class="nav-link" href="../html/Textbooks.html">Textbooks</a>
-          <a class="nav-link" href="../html/classes.html">Classes</a>
-          <a class="nav-link" href="../html/userSettings.html">Settings</a>
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="card justify-content-center col-8 col-md-3 py-1 mx-2 my-2 d-none" id="noListingsMessage">
+            <div class="card-body text-center">
+              <h5 class="card-title">No listings so far!</h5>
+            </div>
+          </div>
+          <div id="addTextbookBtn" class="justify-content-center d-flex" data-mdb-collapse-init
+            href="#collapseAddTextbookFields" aria-controls="collapseAddTextbookFields">
+            <div class=" col-md-6 col-12 btn bg-light">
+              <span> Add Textbook</span>
+              <i class="fas fa-plus-square" role="button">
+              </i>
+            </div>
+          </div>
+          <div class="rounded  justify-content-center bg-light  collapse container col-md-6 col-12 "
+            id="collapseAddTextbookFields">
+            <div class="mt-2 justify-content-center container col-md-8 col-12">
+              <div class="form-outline mb-4 " data-mdb-input-init="" data-mdb-input-initialized="true">
+                <input name="isbn" class="form-control border border-secondary border-solid border-1" type="text"
+                  id="addTextbookISBN">
+                <label for="isbn" class="form-label">ISBN</label>
+              </div>
+              <div class="form-outline mb-4  " data-mdb-input-init="" data-mdb-input-initialized="true">
+                <input name="class" class="form-control border border-secondary border-solid border-1" type="text"
+                  id="addTextbookClass">
+                <label for="class" class="form-label">Class</label>
+              </div>
+              <div class="form-outline mb-4  " data-mdb-input-init="" data-mdb-input-initialized="true">
+                <input name="price" class=" form-control mb-4  border border-secondary border-solid border-1"
+                  type="number" step='0.01' id="addTextbookPrice">
+                <label for="price" class="form-label">Price</label>
+              </div>
+              <!-- Show result for above request here -->
+              <div class="d-flex justify-content-center mb-2">
+                <p class="small text-center" id="addTextbookResult">
+                  &nbsp;</p>
+              </div>
+              <button type="button" class="btn btn-primary w-100 mb-3" id="newTextbookBtn">Add</button>
+              <button type="button" class="btn btn-secondary w-100 mb-4" aria-controls="collapseAddTextbookFields"
+                data-mdb-collapse-init data-mdb-ripple-init href="#collapseAddTextbookFields">Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- Main Content -->
-      <div class="col-sm-10">
-        <!-- Header image -->
-        <div class="container">
-          <img src="../images/holmes.jpg" style='width:100%;' alt="Holmes Lounge" />
-          <div class="centered">
-            <h1>Textbooks For Sale</h1>
-            <h4>By college students, <br> for college students</h4>
-          </div>
-        </div>
-        <br>
-        <br>
-        <h1>Textbook Buy and Sell</h1>
-        <h3> Support your local student vendors. </h3>
-        <hr>
-        <h4>Search by name, author, or ISBN</h4>
-        <div class="input-group">
-          <input type="text" oninput="searchTextbooks()" id="searchTextbookQuery" class="form-control input" placeholder="Search" /> &nbsp; &nbsp;
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-outline-primary">Search</button>
-          </span>
-        </div>
-        <br>
-        <br>
-        <!-- USER OWNED TESTBOOK POSTS -->
-        <div id="myListingsContainer">
-          <h2 id="myListings">My Listings</h2>
+      <!-- End User Owned Textbook -->
+      <hr class="container bg-glass rounded col-md-10 col-12">
 
-          <!-- NEW TEXTBOOK POST MODAL -->
-          <div class="modal fade" id="addTextbookModal" tabindex="-1" role="dialog" aria-labelledby="addTextbook" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">New Textbook Listing</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Add a new textbook to sell!</p>
-                  <form>
-                    Title:<br>
-                    <input type="text" value="Title" id="title">
-                    <br>
-                    Author:<br>
-                    <input type="text" value="Author" id="author">
-                    <br>
-                    ISBN:<br>
-                    <input type="text" value="ISBN" id="isbn">
-                    <br>
-                    Class:<br>
-                    <input type="text" value="Class" id="class">
-                    <br>
-                    Price($):<br>
-                    <input type="number" step='0.01' value="1" id="price">
-                    <br>
-                    <br>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" id="newTextbookBtn">Add</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-              </div>
+      <div class="container bg-glass mt-2 rounded col-md-10 col-12">
+        <h2 class=" text-center mb-1">All Textbook Listings</h2>
+        <!-- Search Content -->
+        <div class="input-group">
+          <div class="form-outline" data-mdb-input-init="" data-mdb-input-initialized="true">
+            <input placeholder="Search" type="search"
+              oninput="searchTable('searchTextbookQuery', 'textbookNoSearchResultsMsg')" id="searchTextbookQuery"
+              class="form-control bg-light">
+            <label class="form-label" for="form1" style="margin-left: 0px;">Search by name, author, or ISBN</label>
+            <div class="form-notch">
+              <div class="form-notch-leading" style="width: 9px;"></div>
+              <div class="form-notch-middle" style="width: 189.6px;"></div>
+              <div class="form-notch-trailing"></div>
             </div>
           </div>
-        </div>
-        <!-- USER LISTINGS -->
-        <!-- ADD LISTING -->
-
-        <div id="userTextbookListings" class="list-group">
-
-        </div>
-        <button type="button" class="w-100 btn btn-light" id="addBtn" data-toggle="modal" data-target="#addTextbookModal">Add Textbook
-            <i class="fas fa-plus-square"></i>
+          <button id="search-button" type="button" class="btn btn-primary">
+            <i class="fas fa-search"></i>
           </button>
-        <br>
-        <br>
-        <h2 id="allListings">All Textbook Listings</h2>
-        <div>
+        </div>
+        <!-- End Search Content -->
+        <!-- All Textbook Listings -->
+        <div class="table-responsive rounded">
           <table id="myTable" class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">ISBN #</th>
-                <th scope="col">Seller Email</th>
+                <th scope='col'>Cover</th>
                 <th scope="col">Title</th>
                 <th scope="col">Author</th>
-                <th scope="col">Price</th>
+                <th scope="col">ISBN #</th>
                 <th scope="col">Class</th>
-                <th scope='col'>Cover</th>
+                <th scope="col">Price</th>
               </tr>
             </thead>
             <tbody id="textbookTableBody">
               <tr>
-                <td>isbn</td>
-                <td>seller email</td>
-                <td>title</td>
-                <td>author</td>
-                <td>class</td>
-                <td>price</td>
-                <td>Cover Image</td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+              </tr>
+              <tr class="d-none" id="textbookNoSearchResultsMsg">
+                <td>
+                  No matching records found
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </tbody>
+
           </table>
+
         </div>
       </div>
-    </div>
-  </div>
+      <!-- End All Textbook Listings -->
 
-  <!-- TEXTBOOK DETAILS MODAL/ CONTACT SELLER -->
-  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="textbookTitle">Textbook title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+    </section>
+    <!-- End Main Content -->
+
+
+    <!-- Textbook Details and Contact Seller Modal -->
+    <div class="modal fade" id="contactSellerlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="textbookTitle">Edit Listing</h5>
+            <button id="closeContactSellerModalBtn" type="button" class="btn-close" data-mdb-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
           <div class="modal-body">
             <div class="row">
               <div class="col">
-                <!-- MODAL CONTENT -->
                 <div id="textbookAuthor"></div>
                 <div id="textbookISBN"></div>
                 <div id="textbookSeller"></div>
                 <div id="textbookClass"></div>
                 <div id="textbookPrice"></div>
               </div>
-                <div class="col">
-                  <div ><img id="detailCoverImage" src=""/></div>
-                </div>
+              <div class="col">
+                <div><img id="detailCoverImage" /></div>
+              </div>
             </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="contactBtn" onclick="sendEmail()">Contact Seller</button>
+            <div class="modal-footer d-flex justify-content-center">
+              <button type="button" class="btn btn-primary w-50" id="contactBtn" onclick="sendEmail()">Contact
+                Seller
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- USER TEXTBOOK EDITING MODAL -->
-  <div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="utextbookTitle">Textbook title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- MODAL CONTENT -->
-          <h2>Edit Listing</h2>
-          <form>
-            Title:<br>
-            <input type="text" value="Title" id="utitle">
-            <br>
-            Author:<br>
-            <input type="text" value="Author" id="uauthor">
-            <br>
-            ISBN:<br>
-            <input type="text" value="ISBN" id="uisbn">
-            <br>
-            Class:<br>
-            <input type="text" value="Class" id="uclass">
-            <br>
-            Price($):<br>
-            <input type="number" step='0.01' value="1" id="uprice">
-            <br>
-            <br>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" id="deleteBtn">Delete Post</button>
-          <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
+    <!-- End Textbook Details and Contact Seller Modal -->
+
+    <!-- User Textbook Editing Modal -->
+    <div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog container" role="document">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title " id="utextbookTitle">Edit Textbook Listing</h5>
+            <button id="closeEditTextbookModalBtn" type="button" class="btn-close" data-mdb-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body  row ">
+            <div class="form-outline mb-1">
+              <label for="utitle" class=" form-label">Title</label>
+              <input readonly name="utitle" class="disabled form-control border border-secondary border-solid border-1"
+                type="text" id="utitle">
+            </div>
+
+            <div class="form-outline mb-1">
+              <label for="uauthor" class="form-label"> Author </label>
+              <input readonly name="uauthor" type="text"
+                class="disabled form-control border border-secondary border-solid border-1" id="uauthor">
+            </div>
+
+            <div class="form-outline mb-1">
+              <label for="uisbn" class="form-label"> ISBN </label>
+              <input readonly class="disabled form-control border border-secondary border-solid border-1" name="uisbn"
+                type="text" id="uisbn">
+            </div>
+            <div class="form-outline mb-1">
+              <label for="uclass" class="form-label"> Class </label>
+              <input readonly class="disabled form-control border border-secondary border-solid border-1" name="uclass"
+                type="text" id="uclass">
+            </div>
+
+            <div class="form-outline mb-1">
+              <label for="uprice" class="form-label">Price </label>
+              <input name="uprice" type="number" step='0.01'
+                class=" form-control border border-secondary border-solid border-1" id="uprice">
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button type="button" class="btn   btn-info w-50" id="saveBtn">Save</button>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center ">
+            <button type="button" class="btn btn-danger w-50" id="deleteBtn">Delete Post</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <br>
+    <!-- End User Textbook Editing Modal -->
 
+  </div>
+  <!-- Dark Overlay element -->
+  <div class="overlay"></div>
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
+  <!-- jQuery Custom Scroller CDN -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom Javascript -->
+  <script src="../js/common.js"></script>
+  <script src="../js/common-authorized.js"></script>
+
+  <script src="../js/textbooks.js"></script>
 
 </body>
 

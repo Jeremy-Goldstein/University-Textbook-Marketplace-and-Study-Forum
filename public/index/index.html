@@ -1,16 +1,30 @@
-<html>
-  <head>
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+<!DOCTYPE html>
 
-    <!--Authentication-->
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
-  
-    <!--Database-->
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
-  
-    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+<!--
+    HTML Document
+    Description: Home page for all visitors.
+    - Allow users to log in
+    - Navigate to create account and password reset
+-->
 
-    <script>
+<html lang='en'>
+
+<head>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Firebase App is always required and must be first -->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+
+  <!--Authentication-->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+
+  <!--Database-->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyA-c6ek6-s_F17oT7MqSrHFLV0pKx6GgVs",
       authDomain: "universitystudyhall.firebaseapp.com",
@@ -23,114 +37,110 @@
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    </script>
+  </script>
 
-    <!-- Font Awesome -->
-    <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-    rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
-    rel="stylesheet"
-    />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="./css/LoginStyle.css" />
-    
-    <title>Home Page</title>
-  </head>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="./css/unauthenticated.css" />
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
 
-  <body>
-    <!-- MDB -->
-    <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
-    ></script>
-    <!-- Section: Design Block -->
-    <section class="background-radial-gradient overflow-hidden">
+  <title>Home Page</title>
+</head>
 
-      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-        <div class="row gx-lg-5 align-items-center mb-5">
-          <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-              University Textbook Marketplace <br />
-              <span style="color: hsl(218, 81%, 75%)">and Study Forum</span>
-            </h1>
-            <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-              Buy, sell, and exchange class information hassle-free. 
-              Whether you're searching for required course materials or looking to offload last semester's books, our platform connects you with fellow students seamlessly. 
-              Dive into our vibrant study forum to collaborate, share resources, and conquer academic challenges together. 
-            </p>
-          </div>
+<body>
+  <!-- Section: Design Block -->
+  <section class="background-radial-gradient overflow-auto vh-100 d-flex flex-column ">
 
-          <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-            <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-            <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+      <div class="row gx-lg-5 align-items-center mb-5">
+        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+          <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+            University Textbook Marketplace <br />
+            <span style="color: hsl(218, 81%, 75%)">and Study Forum</span>
+          </h1>
+          <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%); text-align: justify;">
+            Buy and sell class textbooks hassle-free.
+            Dive into our vibrant study forum to collaborate and share class resources.
+            Welcome to your go-to platform to connect to your classmates seamlessly.
+            Let's ace academic challenges together. </p>
+        </div>
 
-            <div class="card bg-glass">
-              <div style="padding: unset;" class="card-body px-4 pt-5 px-md-5">
-                <h4 class="mb-2  text-center">Sign in</h4>
-                <form>
+        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+          <div class="card bg-glass">
+            <div style="padding: unset;" class="card-body px-4 pt-5 px-md-5">
+              <h4 class="mb-2  text-center">Sign in</h4>
+              <form>
 
 
-                  <!-- Email input -->
-                  <div class="form-outline mb-4">
-                    <input type="email" id="email" class="form-control border border-secondary border-solid border-1" />
-                    <label class="form-label label-float">Email address</label>
-                  </div>
+                <!-- Email input -->
+                <div class="form-outline mb-4" data-mdb-input-init>
+                  <input type="email" id="email" class="form-control border border-secondary border-solid border-1"
+                    required="required" />
+                  <label class="form-label label-float">Email address</label>
+                </div>
 
-                  <!-- Password input -->
-                  <div class="form-outline mb-4">
-                    <input type="password" id="password" class="form-control border border-secondary border-solid border-1" />
-                    <label class="label-float form-label">Password</label>
-                  </div>
+                <!-- Password input -->
+                <div class="form-outline" data-mdb-input-init>
+                  <input type="password" id="password"
+                    class="form-control border border-secondary border-solid border-1" required="required" />
+                  <label class="label-float form-label">Password</label>
+                </div>
 
-                  <div class="d-flex justify-content-center mb-2">
-                    <p class="text-muted small text-center" id="loginResult">
-                      
-                    </p>
-                  </div>
-                  
-                  <div class="d-flex justify-content-center mb-4">
-                    <label class="text-muted" id="forgotPassword">
-                      Forgot Password?
-                    </label>
-                  </div>
-                  
+                <div class="d-flex justify-content-center">
+                  <p class="text-muted small text-center" id="loginResult">
+                    &nbsp;
+                  </p>
+                </div>
 
-                  <button type="submit" id="login" class="btn btn-primary btn-block mb-4">
-                    Log In
-                  </button>
+                <div class="d-flex justify-content-center mb-4">
+                  <label class="text-muted" style="cursor: pointer;" id="forgotPassword">
+                    Forgot Password?
+                  </label>
+                </div>
 
-                  <button type="submit" id="createAccount" class="btn btn-secondary btn-block mb-5">
-                    Create Account
-                  </button> 
-                  
-                  <div class="d-flex justify-content-center" >
-                    <p class="m-0 small text-center">  <a href="https://github.com/Selamawit1/CSE437S_Final_Project" > Code</a> on GitHub  </p>
-                    <i style="margin-left: 2px;" class=" fab fa-github"></i>
 
-                  </div>
-                </form>
-              </div>
+                <button type="submit" id="login" class="btn btn-primary btn-block mb-4">
+                  Log In
+                </button>
+
+                <button type="submit" id="createAccount" class="btn btn-secondary btn-block mb-5">
+                  Create Account
+                </button>
+
+                <div class="d-flex justify-content-center">
+                  <p class="m-0 small text-center"> <a
+                      href="https://www.github.com/Jeremy-Goldstein/University-Textbook-Marketplace-and-Study-Forum">
+                      Code</a> on GitHub
+                  </p>
+                  <i style="margin-left: 2px;" class=" fab fa-github"></i>
+
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <!-- Section: Design Block -->  
+    </div>
+  </section>
+  <!-- Section: Design Block -->
 
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 
   <!-- Custom Javascript -->
-  <script src="./js/CommonFunctions.js"></script>
-  <script src="./js/LoginScript.js"></script>    
+  <script src="./js/common.js"></script>
+  <script src="./js/index.js"></script>
 
-  </body>
+</body>
+
 </html>
