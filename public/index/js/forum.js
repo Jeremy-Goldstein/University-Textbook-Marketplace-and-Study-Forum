@@ -284,11 +284,11 @@ function newPost() {
       let timestamp = new Date();
 
       if (!isValidForumTextInput(title)) {
-        signUpResultMessage("Error: Post title is invalid.", isError = true, show = true, id = "newPostResult")
+        displayResultMessage("Error: Post title is invalid.", isError = true, show = true, id = "newPostResult")
         return
       }
       if (!isValidForumTextInput(content)) {
-        signUpResultMessage("Error: Post content is invalid.", isError = true, show = true, id = "newPostResult")
+        displayResultMessage("Error: Post content is invalid.", isError = true, show = true, id = "newPostResult")
         return
       }
 
@@ -299,7 +299,7 @@ function newPost() {
         const file = fileInput.files[0];
         // Check if the file MIME type is an .exe
         if (file.type.startsWith('application/x-msdownload') || !file) {
-          signUpResultMessage("Error: Uploading executable files is not permitted.", isError = true, show = true, id = "newPostResult")
+          displayResultMessage("Error: Uploading executable files is not permitted.", isError = true, show = true, id = "newPostResult")
           return;
         }
 
@@ -321,10 +321,10 @@ function newPost() {
           function (snapshot) {
             // Handle upload progress
             let progress = Math.max(parseInt((((snapshot.bytesTransferred / snapshot.totalBytes) * 100) - 1)), 0);
-            signUpResultMessage('Upload is ' + progress + '% done...', isError = false, show = true, id = "newPostResult");
+            displayResultMessage('Upload is ' + progress + '% done...', isError = false, show = true, id = "newPostResult");
           },
           function (error) {
-            signUpResultMessage('Upload failed: ' + error.message, isError = true, show = true, id = "newPostResult");
+            displayResultMessage('Upload failed: ' + error.message, isError = true, show = true, id = "newPostResult");
           },
           function () {
 
@@ -386,7 +386,7 @@ function newPostFirebaseCall(
         // Clear file name
         document.getElementById('fileId').value = "";
         // Reset message
-        signUpResultMessage('', isError = false, show = false, id = "newPostResult");
+        displayResultMessage('', isError = false, show = false, id = "newPostResult");
         // Render post
         loadPostListings();
         // Render voting buttons

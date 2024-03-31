@@ -9,9 +9,9 @@ window.onload = function () {
     var emailAddress = document.getElementById("email").value;
 
     firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
-      signUpResultMessage("Password Reset: Please check your email.", isError = false, show = true, id = "loginResult");
+      displayResultMessage("Password Reset: Please check your email.", isError = false, show = true, id = "loginResult");
     }).catch(function (error) {
-      signUpResultMessage(error, isError = true, show = true, id = "loginResult");
+      displayResultMessage(error, isError = true, show = true, id = "loginResult");
     });
 
   }

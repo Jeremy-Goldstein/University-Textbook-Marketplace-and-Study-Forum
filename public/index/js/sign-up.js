@@ -11,19 +11,19 @@ window.onload = function () {
     const reenterPassword = document.getElementById("reenterPassword").value;
     const username = document.getElementById("username").value;
     if (!isValidEmail(email)) {
-      signUpResultMessage("Error: Ensure that the email is valid.", isError = true, show = true, id = "loginResult");
+      displayResultMessage("Error: Ensure that the email is valid.", isError = true, show = true, id = "loginResult");
       return;
     }
     if (typeof isValidUsername(username) === 'string') { // Return string on fail
-      signUpResultMessage(isValidUsername(username));
+      displayResultMessage(isValidUsername(username));
       return;
     }
     if (pass != reenterPassword) {
-      signUpResultMessage("Error: Ensure passwords match.");
+      displayResultMessage("Error: Ensure passwords match.");
       return;
     }
 
-    signUpResultMessage("Processing...");
+    displayResultMessage("Processing...");
 
     firebase
       .auth()
@@ -32,7 +32,7 @@ window.onload = function () {
         userCredential.user.sendEmailVerification()
           .then(() => {
 
-            signUpResultMessage("Account Created: To login, verify your email via the sign-up link sent to your inbox.", false);
+            displayResultMessage("Account Created: To login, verify your email via the sign-up link sent to your inbox.", false);
             userCredential.user.updateProfile({
               displayName: username,
             })
@@ -54,12 +54,12 @@ window.onload = function () {
         if (error.message == "The email address is already in use by another account.") {
 
           if (getCookie("newEmailAccount") == email) {
-            signUpResultMessage("Oops! Verify your account first from the link in your email inbox, and then return to the homepage to log in.");
+            displayResultMessage("Oops! Verify your account first from the link in your email inbox, and then return to the homepage to log in.");
           } else {
-            signUpResultMessage("Error: The email address is already in use by another account.");
+            displayResultMessage("Error: The email address is already in use by another account.");
           }
         } else {
-          signUpResultMessage("Account Not Created: " + error.message);
+          displayResultMessage("Account Not Created: " + error.message);
         }
       });
 
@@ -67,7 +67,7 @@ window.onload = function () {
 
   document.getElementById("createAccount").addEventListener("click", event => {
     event.preventDefault();
-    signUpResultMessage("", isError = false, show = false) // Clear message from previous click
+    displayResultMessage("", isError = false, show = false) // Clear message from previous click
     signup();
   });
 

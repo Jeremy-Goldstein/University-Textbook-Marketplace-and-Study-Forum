@@ -33,15 +33,15 @@ function login() {
   let userEmail = document.getElementById("email").value;
   let userPass = document.getElementById("password").value;
   if (!isValidEmail(userEmail)) {
-    signUpResultMessage("Please ensure your email is valid", isError = true, show = true, id = "loginResult");
+    displayResultMessage("Please ensure your email is valid", isError = true, show = true, id = "loginResult");
     return;
   }
 
   firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
     .then((userCredential) => {
-      var user = userCredential.user;;
+      var user = userCredential.user;
       if (!user.emailVerified) {
-        signUpResultMessage("Please verify your email before logging in.", isError = true, show = true, id = "loginResult");
+        displayResultMessage("Please verify your email before logging in.", isError = true, show = true, id = "loginResult");
       } else {
         window.location.href = "/html/home.html";
       }
@@ -54,19 +54,21 @@ function login() {
 
       switch (errorCode) {
         case 'auth/invalid-email':
-          signUpResultMessage('Invalid email format', isError = true, show = true, id = "loginResult");
+          displayResultMessage('Invalid email format', isError = true, show = true, id = "loginResult");
           break;
         case 'auth/user-disabled':
-          signUpResultMessage('User account is disabled', isError = true, show = true, id = "loginResult");
+          displayResultMessage('User account is disabled', isError = true, show = true, id = "loginResult");
           break;
         case 'auth/user-not-found':
-          signUpResultMessage('User not found', isError = true, show = true, id = "loginResult");
+          displayResultMessage('User not found', isError = true, show = true, id = "loginResult");
           break;
         case 'auth/wrong-password':
-          signUpResultMessage('Incorrect password', isError = true, show = true, id = "loginResult");
+          displayResultMessage('Incorrect password', isError = true, show = true, id = "loginResult");
           break;
         default:
-          signUpResultMessage('Incorrect email or password', isError = true, show = true, id = "loginResult");
+          if (errorCode != null) {
+            displayResultMessage('Incorrect email or password', isError = true, show = true, id = "loginResult");
+          }
       }
     });
 }
