@@ -63,13 +63,13 @@ function updateUsernameEmail() {
           displayName: newUsername
         })
           .catch(function (error) {
-            signUpResultMessage(error.message, isError = true, show = true, id = "usernameEmailChangeResult");
+            displayResultMessage(error.message, isError = true, show = true, id = "usernameEmailChangeResult");
             return
           });
       }
     });
   } else {
-    signUpResultMessage("Please ensure your username is valid and then try again", isError = true, show = true, id = "usernameEmailChangeResult");
+    displayResultMessage("Please ensure your username is valid and then try again", isError = true, show = true, id = "usernameEmailChangeResult");
     return
   }
 
@@ -80,15 +80,15 @@ function updateUsernameEmail() {
         // User is signed in.
         user.updateEmail(newEmail)
           .then(() => {
-            signUpResultMessage("Username and email updated.", isError = false, show = true, id = "usernameEmailChangeResult");
+            displayResultMessage("Username and email updated.", isError = false, show = true, id = "usernameEmailChangeResult");
           })
           .catch(function (error) {
-            signUpResultMessage(error.message, isError = true, show = true, id = "usernameEmailChangeResult");
+            displayResultMessage(error.message, isError = true, show = true, id = "usernameEmailChangeResult");
           });
       }
     });
   } else {
-    signUpResultMessage("Please ensure your email is valid and then try again", isError = true, show = true, id = "usernameEmailChangeResult");
+    displayResultMessage("Please ensure your email is valid and then try again", isError = true, show = true, id = "usernameEmailChangeResult");
     return
   }
 
@@ -101,19 +101,19 @@ function updatePassword() {
   let newPasswordConfirm = document.getElementById("newPasswordConfirm").value;
 
   if (newPassword != newPasswordConfirm) {
-    signUpResultMessage("Error: Password do not match.", isError = true, show = true, id = "passwordResetResult");
+    displayResultMessage("Error: Password do not match.", isError = true, show = true, id = "passwordResetResult");
   } else if (newPassword.length < 6 || newPasswordConfirm < 6) {
-    signUpResultMessage("Error: Password must be at least 6 characters.", isError = true, show = true, id = "passwordResetResult");
+    displayResultMessage("Error: Password must be at least 6 characters.", isError = true, show = true, id = "passwordResetResult");
   } else {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
         user.updatePassword(newPassword).then(
           () => {
-            signUpResultMessage("Successfully updated password!", isError = false, show = true, id = "passwordResetResult");
+            displayResultMessage("Successfully updated password!", isError = false, show = true, id = "passwordResetResult");
           },
           error => {
-            signUpResultMessage(error, isError = true, show = true, id = "passwordResetResult");
+            displayResultMessage(error, isError = true, show = true, id = "passwordResetResult");
           }
         );
       }
@@ -130,7 +130,7 @@ function updateProfilePicture(event) {
       // Get File and check if the file is an image
       var file = event.target.files[0];
       if (!file.type.startsWith('image/')) {
-        signUpResultMessage('Selected file is not an image.', isError = true, show = true, id = "profilePicResetResult");
+        displayResultMessage('Selected file is not an image.', isError = true, show = true, id = "profilePicResetResult");
         return;
       }
 
@@ -145,7 +145,7 @@ function updateProfilePicture(event) {
         function (snapshot) {
           // Handle upload progress
           let progress = Math.max(parseInt((((snapshot.bytesTransferred / snapshot.totalBytes) * 100) - 1)), 0);
-          signUpResultMessage('Upload is ' + progress + '% done...', isError = false, show = true, id = "profilePicResetResult");
+          displayResultMessage('Upload is ' + progress + '% done...', isError = false, show = true, id = "profilePicResetResult");
         },
         function (error) {
           profilePicResetResult('Upload failed: ' + error.message, isError = true, show = true, id = "profilePicResetResult");
@@ -163,7 +163,7 @@ function updateProfilePicture(event) {
               })
               .then(function () {
                 renderProfilePictureInSettings();
-                signUpResultMessage("Successfully updated user profile image.", isError = false, show = true, id = "profilePicResetResult");
+                displayResultMessage("Successfully updated user profile image.", isError = false, show = true, id = "profilePicResetResult");
               })
               .catch(function (error) {
                 console.log(error)

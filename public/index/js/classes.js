@@ -62,11 +62,11 @@ function editClass() {
   let uinstructor = document.getElementById("uinstructor").value;
 
   if (!isValidCourseName(utitle)) {
-    signUpResultMessage("Course title is invalid.", isError = true, show = true, "editClassResult");
+    displayResultMessage("Course title is invalid.", isError = true, show = true, "editClassResult");
     return;
   }
   if (!isValidPersonName(uinstructor)) {
-    signUpResultMessage("Instructor name is invalid.", isError = true, show = true, "editClassResult");
+    displayResultMessage("Instructor name is invalid.", isError = true, show = true, "editClassResult");
     return;
   }
 
@@ -246,23 +246,23 @@ function addClass() {
       let instructor = document.getElementById("instructor").value;
 
       if (!isValidEmail(email)) {
-        signUpResultMessage("Instructor email is invalid", isError = true, show = true, "addClassResult")
+        displayResultMessage("Instructor email is invalid", isError = true, show = true, "addClassResult")
         return
       }
       if (!isValidCourseName(title)) {
-        signUpResultMessage("Course title is invalid", isError = true, show = true, "addClassResult")
+        displayResultMessage("Course title is invalid", isError = true, show = true, "addClassResult")
         return;
       }
       if (!isValidPersonName(instructor)) {
-        signUpResultMessage("Instructor name is invalid", isError = true, show = true, "addClassResult")
+        displayResultMessage("Instructor name is invalid", isError = true, show = true, "addClassResult")
         return
       }
       if (school.includes("Select a School") || department.includes("Select a School First")) {
-        signUpResultMessage("A school and deparment must be selected", isError = true, show = true, "addClassResult")
+        displayResultMessage("A school and deparment must be selected", isError = true, show = true, "addClassResult")
         return
       }
 
-      signUpResultMessage("", isError = true, show = false, "addClassResult")
+      displayResultMessage("", isError = true, show = false, "addClassResult")
 
       let rootRef = firebase.database().ref();
       let classesRef = rootRef.child("classes");

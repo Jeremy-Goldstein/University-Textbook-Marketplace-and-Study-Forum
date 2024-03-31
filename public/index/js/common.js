@@ -3,7 +3,7 @@
     Description: Common functions used by all other JavaScript files.
 */
 
-function signUpResultMessage(msg, isError = true, show = true, id = "loginResult") {
+function displayResultMessage(msg, isError = true, show = true, id = "loginResult") {
   document.getElementById(id).innerText = msg;
   if (show) {
     document.getElementById(id).style.display = "block";

@@ -301,15 +301,15 @@ function addTextbook() {
       let newStoreRef = storesRef.push();
 
       if (!isValidCourseName(aclass)) {
-        signUpResultMessage("Error: Class name is not valid.", isError = true, show = true, id = "addTextbookResult")
+        displayResultMessage("Error: Class name is not valid.", isError = true, show = true, id = "addTextbookResult")
         return;
       }
       if (!isvalidPrice(price)) {
-        signUpResultMessage("Error: Listing price is not valid.", isError = true, show = true, id = "addTextbookResult")
+        displayResultMessage("Error: Listing price is not valid.", isError = true, show = true, id = "addTextbookResult")
         return;
       }
 
-      signUpResultMessage("Processing...", isError = false, show = true, id = "addTextbookResult")
+      displayResultMessage("Processing...", isError = false, show = true, id = "addTextbookResult")
 
 
       searchBook(isbn)
@@ -333,7 +333,7 @@ function addTextbook() {
               if (error) {
                 console.log(error);
               } else {
-                signUpResultMessage("Succesfully listed your textbook on the marketplace!", isError = false, show = true, id = "addTextbookResult")
+                displayResultMessage("Succesfully listed your textbook on the marketplace!", isError = false, show = true, id = "addTextbookResult")
                 // Render new textbook listing
                 renderUserTextbooks();
                 renderAllTextbooks();
@@ -343,7 +343,7 @@ function addTextbook() {
 
         })
         .catch(error => {
-          signUpResultMessage(error, isError = true, show = true, id = "addTextbookResult")
+          displayResultMessage(error, isError = true, show = true, id = "addTextbookResult")
           return;
         });
     }
