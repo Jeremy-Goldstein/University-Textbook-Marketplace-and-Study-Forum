@@ -1,5 +1,5 @@
 # University Textbook Marketplace and Study Forum
-### Live Demo: [universitystudyhall.web.app](universitystudyhall.web.app)
+### Live Demo: [universitystudyhall.web.app](https://universitystudyhall.web.app)
 
 Host a website via Firebase where users post for-sale listings of 
 textbooks and ask other users questions about class material.
